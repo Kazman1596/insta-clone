@@ -2,14 +2,20 @@ import Image from 'next/image';
 import React from 'react';
 import { SearchIcon, PlusCircleIcon } from '@heroicons/react/outline'
 import { HomeIcon } from '@heroicons/react/solid'
+import { useSession, signIn, signOut } from 'next-auth/react';
 
 export default function Header() {
+    const {data: session} = useSession()
+
+    console.log(session)
+
     return (
 
         <div className='shadow-sm border-b sticky top-0 bg-white z-30'>
             <div className='flex items-center justify-between max-w-6xl mx-4 xl:mx-auto'>
             
             {/* Left */}
+
                 <div className='cursor-pointer h-24 w-24 relative hidden lg:inline-grid'>
                     <Image 
                         alt='logo'
@@ -29,6 +35,7 @@ export default function Header() {
                 </div>
                 
                 {/* Middle */}
+
                 <div className='relative mt-1'>
                     <div className='absolute top-2 left-2'>
                         <SearchIcon className='h-5 text-gray-500'/>
@@ -37,14 +44,22 @@ export default function Header() {
                 </div>
 
                 {/* Right */}
+
                 <div className='flex space-x-4 items-center'>
                     <HomeIcon className='hidden md:inline-flex h-6 cursor-pointer hover:scale-125 transition-transform duration-200 ease-out' />
-                    <PlusCircleIcon className='h-6 cursor-pointer hover:scale-125 transition-transform duration-200 ease-out' />
-                    <img
-                        className='h-10 object-contain rounded-full cursor-pointer'
-                        alt='profile'
-                        src='https://pbs.twimg.com/profile_images/664169149002874880/z1fmxo00_400x400.jpg'
-                    />
+                    {session ? (
+                        <>
+                            <PlusCircleIcon className='h-6 cursor-pointer hover:scale-125 transition-transform duration-200 ease-out' />
+                            <img
+                                onClick={signOut}
+                                className='h-10 object-contain rounded-full cursor-pointer'
+                                alt='profile'
+                                src={session.user.image}
+                            />
+                        </>
+                    ) : (
+                        <button onClick={signIn}>Sign In</button>
+                    )}
                 </div>
             </div>
         </div>
