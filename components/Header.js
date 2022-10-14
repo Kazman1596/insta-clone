@@ -57,7 +57,7 @@ export default function Header() {
                                 onClick={signOut}
                                 className='h-10 object-contain rounded-full cursor-pointer'
                                 alt='profile'
-                                src={session.user.image}
+                                src='https://pbs.twimg.com/profile_images/664169149002874880/z1fmxo00_400x400.jpg'
                             />
                         </>
                     ) : (
