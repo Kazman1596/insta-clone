@@ -1,9 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { DotsHorizontalIcon, HeartIcon, ChatIcon, BookmarkIcon, EmojiHappyIcon } from "@heroicons/react/outline";
 import { useSession } from 'next-auth/react'
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { db } from "../firebase";
 
 export default function Post({img, userImg, caption, username, id}) {
     const {data: session} = useSession()
+    const [comment, setComment] = useState('')
+
+    async function sendComment(e) {
+        e.preventDefault()
+        const commentToSend = comment
+        setComment('')
+        await addDoc(collection(db, 'posts', id, 'comments'), {
+            comment: commentToSend,
+            username: session.user.username,
+            userImage: session.user.image,
+            timestamp: serverTimestamp(),
+        })
+    }
     
     return (
         <div className="bg-white my-7 border rounded-md">
@@ -34,7 +49,7 @@ export default function Post({img, userImg, caption, username, id}) {
                     </div>
                     <BookmarkIcon className="btn" />
                 </div>
-                
+
             )}
 
                 {/* Post Comments */}
@@ -47,8 +62,21 @@ export default function Post({img, userImg, caption, username, id}) {
 
                     <form className="flex items-center p-4">
                         <EmojiHappyIcon className="h-7" />
-                        <input className="border-none flex-1 focus:ring-0" type='text' placeholder='Enter your comment...' />
-                        <button className="text-blue-400 font-bold">Post</button>
+                        <input 
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                            className="border-none flex-1 focus:ring-0" 
+                            type='text' 
+                            placeholder='Enter your comment...' 
+                        />
+                        <button 
+                            type="submit"
+                            disabled={!comment.trim()} 
+                            className="text-blue-400 font-bold disabled:text-blue-200"
+                            onClick={sendComment}
+                        >
+                            Post
+                        </button>
                     </form>
                 
                 )}
