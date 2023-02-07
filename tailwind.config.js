@@ -5,7 +5,11 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        mont: ['Mont', 'ui-sans-serif', 'system-ui'],
+      }
+    },
   },
   plugins: [
     require('@tailwindcss/forms', 'tailwind-scrollbar'),

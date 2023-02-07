@@ -28,6 +28,7 @@ export default function UploadModal() {
 
         })
         const imageRef = ref(storage, `posts/${docRef.id}/image`)
+        
         await uploadString(imageRef, selectedFile, 'data_url').then(
             async(snapshot) => {
                 const downloadURL = await getDownloadURL(imageRef)
@@ -61,7 +62,7 @@ export default function UploadModal() {
         <div>
             {open && (
             <Modal
-                className='max-w-lg w-[90%] p-6 absolute top-56 left-[50%] translate-x-[-50%] bg-white border-2 rounded-md shadow-md focus:ring-0'
+                className='max-w-lg w-[90%] p-6 absolute top-56 left-[50%] translate-x-[-50%] bg-sky-800 border-2 rounded-md shadow-md focus:ring-0'
                 isOpen={open}
                 onRequestClose={()=>{
                     setOpen(false)
@@ -70,8 +71,8 @@ export default function UploadModal() {
             >
                 <div className='flex flex-col justify-center items-center h-[100%]'>
                         {selectedFile ? (
-                            <img onClick={()=>setSelectedFile(null)} src={selectedFile} alt='uploaded_image' className='w-full max-h-[250px] object-cover cursor-pointer' />) : (
-                            <CameraIcon onClick={()=>filePickerRef.current.click()} className='cursor-pointer h-14 bg-red-200 p-2 rounded-full border-2 text-red-500'/>)
+                            <img onClick={()=>setSelectedFile(null)} src={selectedFile} alt='uploaded_image' className=' max-w-[250px] object-fit cursor-pointer' />) : (
+                            <CameraIcon onClick={()=>filePickerRef.current.click()} className='cursor-pointer h-14 bg-cyan-800 p-2 rounded-full border-2 border-amber-500 text-amber-500'/>)
                             }
                     <input 
                         type='file' 
@@ -89,7 +90,7 @@ export default function UploadModal() {
                     <button 
                         disabled={!selectedFile || loading}
                         onClick={uploadPost}
-                        className='w-full bg-red-600 text-white p-2 shadow-md hover:brightness-125 disabled:bg-gray-200 disabled:cursor-pointer-not-allowed disabled:hover:brightness-100'
+                        className='w-full bg-amber-500 text-white p-2 shadow-md hover:brightness-125 disabled:bg-gray-300 disabled:cursor-pointer-not-allowed disabled:hover:brightness-100'
                         >
                         Upload
                     </button>

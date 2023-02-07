@@ -5,6 +5,7 @@ import { HeartIcon as HeartIconFilled } from "@heroicons/react/solid";
 import { useSession } from 'next-auth/react'
 import { addDoc, collection, deleteDoc, doc, onSnapshot, orderBy, query, serverTimestamp, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
+import Image from "next/image";
 
 export default function Post({img, userImg, caption, username, id}) {
     const {data: session} = useSession()
@@ -59,16 +60,18 @@ export default function Post({img, userImg, caption, username, id}) {
     }
     
     return (
-        <div className="bg-white my-7 border rounded-md">
+        <div className="bg-gray-200 my-7 border border-cyan-800 rounded-md max-w-2xl xl:ml-[20%]">
             {/* Post Header */}
 
             <div className="flex items-center p-5">
-                <img 
-                    className="h-12 rounded-full object-cover border p-1 mr-3" 
+                <Image
+                    className="h-12 rounded-full object-cover border p-1" 
                     src={userImg} 
                     alt={username} 
+                    height='40'
+                    width='40'
                 />
-                <p className="font-bold flex-1">{username}</p>
+                <p className="font-bold flex-1 ml-3">{username}</p>
                 <DotsHorizontalIcon className="h-5" />
             </div>
 
@@ -96,18 +99,18 @@ export default function Post({img, userImg, caption, username, id}) {
 
                 {/* Post Comments */}
 
-                <p className="p-5 truncate">
+                <div className="p-5 truncate">
                     {likes.length > 0 && (
                     <p className="font-bold mb-1">{likes.length} likes</p>
                     )}
                     <span className="font-bold mr-2">{username}</span>
                     {caption}
-                </p>
+                </div>
                 {comments.length > 0 && (
                     <div className="mx-10 max-h-24 overflow-y-scroll scrollbar-none">
                         {comments.map(comment =>(
                             <div key={comment.data().id} className='flex items-center space-x-2 mb-2'>
-                                <img className="h-7 rounded-full object-cover" src={comment.data().userImage} alt='user_image'/>
+                                <Image className="h-7 rounded-full object-cover" src={comment.data().userImage} height='30' width='30' alt='user_image'/>
                                 <p className="font-semibold">{comment.data().username}</p>
                                 <p className="flex-1 truncate">{comment.data().comment}</p>
                                 <Moment className="text-sm" fromNow>{comment.data().timestamp?.toDate()}</Moment>
@@ -121,7 +124,7 @@ export default function Post({img, userImg, caption, username, id}) {
                 {session && (
 
                     <form className="flex items-center p-4">
-                        <EmojiHappyIcon className="h-7" />
+                        <EmojiHappyIcon className="mr-2 h-7" />
                         <input 
                             value={comment}
                             onChange={(e) => setComment(e.target.value)}
@@ -132,7 +135,7 @@ export default function Post({img, userImg, caption, username, id}) {
                         <button 
                             type="submit"
                             disabled={!comment.trim()} 
-                            className="text-blue-400 font-bold disabled:text-blue-200"
+                            className="ml-2 text-amber-500 font-bold disabled:text-sky-200"
                             onClick={sendComment}
                         >
                             Post

@@ -17,9 +17,9 @@ export default function Posts() {
     }, [db])
 
     return (
-        <div>
+        <div className="m-5">
             {posts.map(post => (
-                <Post 
+                <Post
                     key={post.id}
                     id={post.id}
                     username={post.data().username}

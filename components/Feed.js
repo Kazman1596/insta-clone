@@ -17,8 +17,8 @@ export default function Feed() {
                 <Posts />
             </section>
 
-            <section className='hidden md:inline-grid'>
-                <div className='fixed w-[380px]'>
+            <section className='hidden md:inline-block'>
+                <div className='fixed w-[250px] xl:w-[380px]'>
                     {/* Mini Profile */}
                     <MiniProfile />
                     {/* Suggestions */}

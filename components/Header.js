@@ -14,26 +14,29 @@ export default function Header() {
 
     return (
 
-        <div className='shadow-sm border-b sticky top-0 bg-white z-30'>
+        <div className='shadow-lg border-b sticky top-0 bg-gray-200 z-30'>
             <div className='flex items-center justify-between max-w-6xl mx-4 xl:mx-auto'>
             
             {/* Left */}
+                <div className='hidden lg:flex'>
 
-                <div className='cursor-pointer h-24 w-24 relative hidden lg:inline-grid'>
-                    <Image 
-                        alt='logo'
-                        layout='fill'
-                        src='https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/2560px-Instagram_logo.svg.png'
-                        className='object-contain'
-                        onClick={() => router.push('/')}
-                    />
+                    <div className='cursor-pointer relative h-20 w-20 hidden lg:inline-grid'>
+                        <Image 
+                            alt='logo'
+                            layout='fill'
+                            src='/images/camera_icon.png'
+                            className='object-contain'
+                            onClick={() => router.push('/')}
+                        />
+                    </div>
+                        <h1 className='font-mont mt-7 ml-2'>Insta-Connect</h1>
                 </div>
                 
-                <div className='cursor-pointer h-24 w-10 relative sm:inline-grid lg:hidden'>
+                <div className='cursor-pointer h-20 w-20 relative sm:inline-grid lg:hidden'>
                     <Image 
                         alt='logo'
                         layout='fill'
-                        src='https://static.xx.fbcdn.net/assets/?revision=816167972411634&name=desktop-instagram-gradient-logo&density=1'
+                        src='/images/camera_icon.png'
                         className='object-contain'
                         onClick={() => router.push('/')}
                         />
@@ -57,12 +60,14 @@ export default function Header() {
                     />
                     {session ? (
                         <>
-                            <PlusCircleIcon onClick={()=> setOpen(true)} className='h-6 cursor-pointer hover:scale-125 transition-transform duration-200 ease-out' />
-                            <img
+                            <PlusCircleIcon onClick={()=> setOpen(true)} className='pr-5 h-6 cursor-pointer hover:scale-125 transition-transform duration-200 ease-out' />
+                            <Image
                                 onClick={signOut}
                                 className='h-10 object-contain rounded-full cursor-pointer'
                                 alt='profile'
-                                src='https://pbs.twimg.com/profile_images/664169149002874880/z1fmxo00_400x400.jpg'
+                                src={session?.user.image}
+                                height='40'
+                                width='40'
                             />
                         </>
                     ) : (

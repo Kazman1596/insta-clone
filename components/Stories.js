@@ -19,7 +19,7 @@ export default function Stories() {
         setStoryUsers(storyUsers)
     }, [])
     return (
-        <div className='flex space-x-2 p-6 bg-white mt-8 border-gray-200 border overflow-x-scroll rounded-sm scrollbar-none'>
+        <div className='flex space-x-2 p-6 bg-sky-800 mt-8 border-gray-600 shadow-lg border overflow-x-scroll rounded-sm scrollbar-none'>
             {session && (
                 <Story img={session.user.image} username={session.user.username} isUser='true' />
             )}
